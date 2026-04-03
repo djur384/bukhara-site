@@ -1,71 +1,500 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bukhara Data Solutions</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #0f172a;
-            color: white;
-            text-align: center;
-        }
-        header {
-            padding: 40px;
-            background: #020617;
-        }
-        h1 {
-            font-size: 2.5em;
-        }
-        p {
-            color: #94a3b8;
-        }
-        .container {
-            padding: 40px;
-        }
-        .card {
-            background: #1e293b;
-            margin: 20px;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        footer {
-            margin-top: 40px;
-            padding: 20px;
-            background: #020617;
-            font-size: 14px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bukhara Data Solutions</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg-soft: #111a2e;
+      --card: rgba(17, 26, 46, 0.72);
+      --line: rgba(255,255,255,0.08);
+      --text: #eef4ff;
+      --muted: #b7c4df;
+      --accent: #4f8cff;
+      --accent-2: #7ed0ff;
+      --success: #5dd39e;
+      --shadow: 0 20px 50px rgba(0,0,0,0.35);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(79,140,255,0.22), transparent 30%),
+        radial-gradient(circle at top right, rgba(126,208,255,0.16), transparent 24%),
+        linear-gradient(180deg, #08101d 0%, #0b1220 55%, #0d1424 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(8, 16, 29, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      gap: 18px;
+    }
+
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .brand span {
+      color: var(--accent-2);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 700;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #6a7dff);
+      color: white;
+      box-shadow: 0 12px 30px rgba(79,140,255,0.28);
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-secondary {
+      border-color: var(--line);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 72px 0 44px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      border-radius: 999px;
+      color: var(--accent-2);
+      font-size: 0.88rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 4.8vw, 4.4rem);
+      line-height: 1.05;
+      margin: 0 0 16px;
+      letter-spacing: -1.5px;
+    }
+
+    .hero p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 700px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .point {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .point strong {
+      display: block;
+      color: white;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .showcase {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .showcase::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(79,140,255,0.22), transparent 28%);
+      pointer-events: none;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .metric {
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(9, 15, 27, 0.7);
+      border-radius: 20px;
+    }
+
+    .metric .k {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .metric .t {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .section {
+      padding: 32px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .section-title h2 {
+      margin: 0 0 8px;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 720px;
+      margin-inline: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.16rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, rgba(79,140,255,0.18), rgba(126,208,255,0.14));
+      border: 1px solid rgba(126,208,255,0.2);
+      color: var(--accent-2);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--muted);
+    }
+
+    .check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: rgba(93, 211, 158, 0.12);
+      color: var(--success);
+      flex: 0 0 auto;
+      font-size: 0.8rem;
+      margin-top: 1px;
+    }
+
+    .cta {
+      padding: 26px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(79,140,255,0.14), rgba(126,208,255,0.08));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .cta h3 {
+      margin: 0 0 6px;
+      font-size: 1.5rem;
+    }
+
+    .cta p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 26px 0 40px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .cards,
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-points,
+      .metric-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding-top: 44px; }
+      .hero-points,
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        width: min(var(--max), calc(100% - 20px));
+      }
+
+      .showcase,
+      .card,
+      .cta {
+        border-radius: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<header>
-    <h1>Bukhara Data Solutions</h1>
-    <p>Cloud | Data | DevOps</p>
-</header>
-
-<div class="container">
-    <div class="card">
-        <h2>About Us</h2>
-        <p>We provide modern data engineering, cloud solutions, and DevOps services.</p>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#home" class="brand">Bukhara <span>Data Solutions</span></a>
+      <nav class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn btn-primary" href="mailto:info@bukhdatasolution.ca">Book a Consultation</a>
     </div>
+  </header>
 
-    <div class="card">
-        <h2>Services</h2>
-        <p>✔ Data Engineering<br>✔ Azure & Cloud Solutions<br>✔ ETL Pipelines<br>✔ DevOps Automation</p>
-    </div>
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Modern data platforms • Cloud delivery • DevOps enablement</div>
+          <h1>Build scalable data and cloud solutions with confidence.</h1>
+          <p>
+            We help businesses modernize their data platforms, streamline ETL pipelines, and automate cloud operations with practical, reliable engineering.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:info@bukhdatasolution.ca">Get in Touch</a>
+            <a class="btn btn-secondary" href="#services">Explore Services</a>
+          </div>
+          <div class="hero-points">
+            <div class="point"><strong>Data Engineering</strong> Robust batch and real-time pipelines.</div>
+            <div class="point"><strong>Cloud Solutions</strong> Azure-focused architecture and delivery.</div>
+            <div class="point"><strong>DevOps Automation</strong> Infrastructure and deployment optimization.</div>
+          </div>
+        </div>
 
-    <div class="card">
-        <h2>Contact</h2>
-        <p>Email: info@bukhdatasolution.ca</p>
-    </div>
-</div>
+        <div class="showcase">
+          <div class="metric-grid">
+            <div class="metric">
+              <div class="k">ETL</div>
+              <div class="t">Reliable pipeline design and orchestration</div>
+            </div>
+            <div class="metric">
+              <div class="k">Cloud</div>
+              <div class="t">Scalable environments built for growth</div>
+            </div>
+            <div class="metric">
+              <div class="k">DevOps</div>
+              <div class="t">Automation for faster, safer delivery</div>
+            </div>
+            <div class="metric">
+              <div class="k">BI</div>
+              <div class="t">Clean data foundations for analytics</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<footer>
-    © 2026 Bukhara Data Solutions
-</footer>
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Services</h2>
+          <p>Focused, high-value services for organizations that need dependable data and cloud engineering support.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="icon">DE</div>
+            <h3>Data Engineering</h3>
+            <p>Design, build, and optimize data pipelines, data models, and integration workflows for accurate and trusted reporting.</p>
+          </article>
+          <article class="card">
+            <div class="icon">CL</div>
+            <h3>Azure & Cloud Solutions</h3>
+            <p>Deploy scalable cloud environments, migrate workloads, and improve platform reliability with practical architecture decisions.</p>
+          </article>
+          <article class="card">
+            <div class="icon">DV</div>
+            <h3>DevOps Automation</h3>
+            <p>Automate infrastructure, deployments, and operational processes to reduce manual work and improve delivery speed.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
+    <section class="section" id="about">
+      <div class="container about">
+        <div class="card">
+          <h3>About Us</h3>
+          <p>
+            Bukhara Data Solutions provides modern data engineering, cloud implementation, and DevOps support tailored to business needs.
+            We focus on clean execution, reliable delivery, and solutions that are built to scale.
+          </p>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span><span>Modern ETL and ELT pipeline development</span></div>
+            <div class="list-item"><span class="check">✓</span><span>Cloud architecture and migration support</span></div>
+            <div class="list-item"><span class="check">✓</span><span>Infrastructure automation and operational efficiency</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Why Choose Us</h3>
+          <p>
+            We combine hands-on technical expertise with a business-focused approach, helping clients move from fragmented systems to efficient, scalable platforms.
+          </p>
+          <div class="list">
+            <div class="list-item"><span class="check">✓</span><span>Clear communication and professional delivery</span></div>
+            <div class="list-item"><span class="check">✓</span><span>Strong foundation in data, cloud, and automation</span></div>
+            <div class="list-item"><span class="check">✓</span><span>Solutions designed for long-term maintainability</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h3>Let’s build something reliable.</h3>
+            <p>Reach out to discuss your data platform, cloud, or automation needs.</p>
+          </div>
+          <a class="btn btn-primary" href="mailto:info@bukhdatasolution.ca">info@bukhdatasolution.ca</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© 2026 Bukhara Data Solutions. All rights reserved.</div>
+  </footer>
 </body>
 </html>
